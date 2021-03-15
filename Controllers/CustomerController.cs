@@ -173,5 +173,30 @@ namespace Controllers
             FileHandlerController.WriteInFile(file, customersForWrite);
         }
 
+        public static long CustomerExistsAndReturnId(string customerCpf)
+        {
+            long idCustomer = 0;
+
+            FileHandler file = new FileHandler();
+            file.FileName = "CLIENTE.csv";
+
+            if (FileHandlerController.CreateDirectoryAndFile(file))
+                idCustomer = 0;
+            else
+            {
+                List<Customer> customers = ConvertFileToList();
+                for (int i = 0; i < customers.Count; i++)
+                {
+                    if (customers[i].Cpf.Equals(customerCpf))
+                    {
+                        idCustomer = customers[i].IdCustomer;
+                        break;
+                    }
+                }
+            }
+
+            return idCustomer;
+        }
+
     }
 }
