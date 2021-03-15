@@ -10,13 +10,19 @@ namespace Controllers
 {
 	public class FileHandlerController
 	{
-        public static void CreateDirectoryAndFile(FileHandler file)
+        public static bool CreateDirectoryAndFile(FileHandler file)
         {
             if (!Directory.Exists(file.GetPath()))
                 Directory.CreateDirectory(file.GetPath());
-          
+
             if (!File.Exists($@"{file.GetPath()}\{file.FileName}"))
-                File.Create($@"{file.GetPath()}\{file.FileName}");
+            {
+                using (FileStream fileStream = File.Create($@"{file.GetPath()}\{file.FileName}")) ;
+                return true;
+            }
+            else
+                return false;
+
         }
 
         public static void WriteInFile(FileHandler file, string[] content)
@@ -32,7 +38,12 @@ namespace Controllers
 
         public static string[] ReadFile(FileHandler file)
         {
-            return File.ReadAllLines($@"{file.GetPath()}\{file.FileName}");
+            string[] fileContent = null;
+
+            if(File.Exists($@"{file.GetPath()}\{file.FileName}"))
+                fileContent= File.ReadAllLines($@"{file.GetPath()}\{file.FileName}");
+
+            return fileContent;
         }
     }
 }
