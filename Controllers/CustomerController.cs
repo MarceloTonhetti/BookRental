@@ -78,19 +78,27 @@ namespace Controllers
 
         private static bool CustomerExists(string customerCpf)
         {
+            bool exists = false;
+
             FileHandler file = new FileHandler();
             file.FileName = "CLIENTE.csv";
 
             if (FileHandlerController.CreateDirectoryAndFile(file))
-                return false;
+                exists = false;
             else
-                //VERIFICAR SE O CLIENTE JÁ ESTA CADASTRADO
-                //SE ESTIVER
-                    //RETORNAR TRUE
-                //SE NAO ESTIVER
-                    //RETORNAR FALSE
+            {
+                List<Customer> customers = ConvertFileToList();
+                for (int i = 0; i < customers.Count; i++)
+				{
+                    if (customers[i].Cpf.Equals(customerCpf))
+                    {
+                        exists = true;
+                        break;
+                    }
+				}
+            } 
 
-            return false;
+            return exists;
         }
 
         private static long NewCustomerId()
