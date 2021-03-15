@@ -18,5 +18,10 @@ namespace Models
 		public string City { get; set; }
 		public string State { get; set; }
 		public string ZipCode { get; set; }
+
+		public string ToStringForWriteFile()
+		{
+			return $"{IdCustomer};{Cpf};{Name};{DateOfBorning};{Telephone};{PublicPlace};{Neighborhood};{City};{State};{ZipCode}";
+		}
 	}
 }
