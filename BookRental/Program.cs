@@ -11,9 +11,34 @@ namespace BookRental
 	{
 		static void Main(string[] args)
 		{
-			CustomerController.RegisterACustomer();
+			int option;
 
+			do
+			{
+				option = MainMenu();
+				switch (option)
+				{
+					case 1:
+						CustomerController.RegisterACustomer();
+						break;
+				}
+			} while (option != 0);
+
+			Console.Write("Pressione qualquer tecla para encerrar o sistema...");
 			Console.ReadKey();
+		}
+
+		public static int MainMenu()
+		{
+			int option;
+			Console.Clear();
+			Console.WriteLine("============= Biblioteca Municipal =============");
+			Console.WriteLine("================ Menu Principal ================");
+			Console.WriteLine("1 - Cadastro de Cliente");
+			Console.WriteLine("2 - Cadastro de Livro");
+			Console.WriteLine("0 - Fechar Sistema");
+
+			return option = int.Parse(Console.ReadLine());
 		}
 	}
 }
