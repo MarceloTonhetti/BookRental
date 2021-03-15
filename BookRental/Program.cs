@@ -24,6 +24,9 @@ namespace BookRental
 					case 2:
 						BookController.RegisterABook();
 						break;
+					case 3:
+						BookLoanController.RegisterALoan();
+						break;
 				}
 			} while (option != 0);
 

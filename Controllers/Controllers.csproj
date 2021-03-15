@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BookController.cs" />
+    <Compile Include="BookLoanController.cs" />
     <Compile Include="CustomerController.cs" />
     <Compile Include="FileHandlerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
