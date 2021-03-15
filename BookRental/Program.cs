@@ -21,6 +21,9 @@ namespace BookRental
 					case 1:
 						CustomerController.RegisterACustomer();
 						break;
+					case 2:
+						BookController.RegisterABook();
+						break;
 				}
 			} while (option != 0);
 
