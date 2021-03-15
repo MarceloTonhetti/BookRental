@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-	class BookLoan
+	public class BookLoan
 	{
 		public long IdCustomer { get; set; }
 		public long TumbleNumber { get; set; }
