@@ -31,8 +31,9 @@ namespace Controllers
                 book = ReadingBookData(bookISBN);
                 book.TumbleNumber = NewTumbleNumber();
                 ConvertListForWriteFile(book);
-                Console.WriteLine("Livro cadastrado com sucesso!!");
-                Console.Write("Pressione qualquer tecla para voltar ao menu princial...");
+                Console.WriteLine("\nLivro cadastrado com sucesso!!");
+                Console.WriteLine("\n>>> Numero do tombo: {0}", book.TumbleNumber);
+                Console.Write("\nPressione qualquer tecla para voltar ao menu princial...");
                 Console.ReadKey();
             }
         }
