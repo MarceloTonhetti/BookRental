@@ -39,6 +39,7 @@ namespace BookRental
 			Console.WriteLine("================ Menu Principal ================");
 			Console.WriteLine("1 - Cadastro de Cliente");
 			Console.WriteLine("2 - Cadastro de Livro");
+			Console.WriteLine("3 - Emprestimo de Livro");
 			Console.WriteLine("0 - Fechar Sistema");
 
 			return option = int.Parse(Console.ReadLine());
