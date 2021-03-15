@@ -133,9 +133,7 @@ namespace Controllers
                 newTumbleNumber++;
             }
             else
-            {
                 newTumbleNumber = 1;
-            }
 
             return newTumbleNumber;
         }
@@ -158,6 +156,31 @@ namespace Controllers
             string[] booksForWrite = bookSb.ToString().Split('\n');
 
             FileHandlerController.WriteInFile(file, booksForWrite);
+        }
+
+        public static bool BookExists(long bookTumbleNumber)
+        {
+            bool exists = false;
+
+            FileHandler file = new FileHandler();
+            file.FileName = "LIVRO.csv";
+
+            if (FileHandlerController.CreateDirectoryAndFile(file))
+                exists = false;
+            else
+            {
+                List<Book> books = ConvertFileToList();
+                for (int i = 0; i < books.Count; i++)
+                {
+                    if (books[i].TumbleNumber == bookTumbleNumber)
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+            }
+
+            return exists;
         }
     }
 }
