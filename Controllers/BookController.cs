@@ -63,7 +63,7 @@ namespace Controllers
             return exists;
         }
 
-        private static List<Book> ConvertFileToList()
+        public static List<Book> ConvertFileToList()
         {
             List<Book> books = new List<Book>();
             FileHandler file = new FileHandler();

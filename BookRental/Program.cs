@@ -30,6 +30,9 @@ namespace BookRental
 					case 4:
 						BookLoanController.MakeDevolution();
 						break;
+					case 5:
+						BookLoanController.ShowReportLoan();
+						break;
 				}
 			} while (option != 0);
 
@@ -47,6 +50,7 @@ namespace BookRental
 			Console.WriteLine("2 - Cadastro de Livro");
 			Console.WriteLine("3 - Emprestimo de Livro");
 			Console.WriteLine("4 - Devolucao do Livro");
+			Console.WriteLine("5 - Relatorio de Emprestimos e Devolucoes");
 			Console.WriteLine("0 - Fechar Sistema");
 
 			return option = int.Parse(Console.ReadLine());

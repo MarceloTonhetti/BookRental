@@ -231,5 +231,35 @@ namespace Controllers
             return bookLoan;
         }
 
+        public static void ShowReportLoan()
+        {
+            List<Customer> customers = CustomerController.ConvertFileToList();
+            List<Book> books = BookController.ConvertFileToList();
+            List<BookLoan> loanedsBooks = ConvertFileToList();
+
+            Customer auxCustomer;
+            Book auxBook;
+
+            Console.Clear();
+			Console.WriteLine("Relatorio de Emprestimos e Devolucoes");
+            foreach (var loanBook in loanedsBooks)
+			{
+                auxBook = books.Find(x => x.TumbleNumber == loanBook.TumbleNumber);
+                auxCustomer = customers.Find(x => x.IdCustomer == loanBook.IdCustomer);
+
+				Console.WriteLine("\nx-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x");
+                Console.WriteLine($"CPF: {auxCustomer.Cpf}");
+                Console.WriteLine($"Titulo: {auxBook.Title}");
+                if(loanBook.LoanStatus == 1)
+                    Console.WriteLine("Status: Emprestado");
+                else
+                    Console.WriteLine("Status: Devolvido");
+                Console.WriteLine($"Data Emprestimo: {loanBook.LoanDate.ToString("dd/MM/yyyy")}");
+                Console.WriteLine($"Data Devolucao: {loanBook.DevolutionDate.ToString("dd/MM/yyyy")}");
+               
+            }
+
+            Console.ReadKey();
+        }
     }
 }

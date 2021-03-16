@@ -119,7 +119,7 @@ namespace Controllers
             return newId;
         }
 
-        private static List<Customer> ConvertFileToList()
+        public static List<Customer> ConvertFileToList()
         {
             List<Customer> customers = new List<Customer>();
             FileHandler file = new FileHandler();
