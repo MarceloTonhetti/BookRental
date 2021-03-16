@@ -18,7 +18,7 @@ namespace Controllers
             BookLoan bookLoan;
 
             Console.Clear();
-            Console.WriteLine("-=-=-=-=-  Emprestimo de Livro  -=-=-=-=-");
+            Console.WriteLine("-x-x-x-x-  Emprestimo de Livro  -x-x-x-x-");
             Console.WriteLine("\nInforme os dados para o emprestimo\n");
             do
             {
@@ -31,7 +31,7 @@ namespace Controllers
                 if (!BookAvailable(bookTumbleNumber))
                 {
                     Console.WriteLine("\nLivro indisponivel\n");
-                    Console.Write("Pressione qualquer tecla para voltar ao menu princial...");
+                    Console.Write("\nPressione qualquer tecla para voltar ao menu princial...");
                     Console.ReadKey();
                 }
                 else
@@ -43,7 +43,7 @@ namespace Controllers
                     if (idCustomer == 0)
                     {
                         Console.WriteLine("\nCliente nao cadastrado\n");
-                        Console.Write("Pressione qualquer tecla para voltar ao menu princial...");
+                        Console.Write("\nPressione qualquer tecla para voltar ao menu princial...");
                         Console.ReadKey();
                     }
                     else
@@ -59,7 +59,7 @@ namespace Controllers
             else
             {
                 Console.WriteLine("\nLivro nao cadastrado\n");
-                Console.Write("Pressione qualquer tecla para voltar ao menu princial...");
+                Console.Write("\nPressione qualquer tecla para voltar ao menu princial...");
                 Console.ReadKey();
             }
         }
@@ -189,20 +189,25 @@ namespace Controllers
         public static void MakeDevolution()
         {
             long bookTumbleNumber;
+            string auxTumbleNumber;
             const double delayTicket = 0.10;
             BookLoan bookLoan;
             int delayDays;
 
             Console.Clear();
-            Console.WriteLine("-=-=-=-=-  Devoucao do Livro  -=-=-=-=-");
+            Console.WriteLine("-x-x-x-x-  Devoucao do Livro  -x-x-x-x-");
             Console.WriteLine("\nInforme os dados para a devolucao\n");
-            Console.Write("Numero do Tombo: ");
-            bookTumbleNumber = long.Parse(Console.ReadLine());
+            do
+            {
+                Console.Write("Numero do Tombo: ");
+                auxTumbleNumber = Console.ReadLine();
+            } while (!long.TryParse(auxTumbleNumber, out bookTumbleNumber));
+
             if (BookController.BookExists(bookTumbleNumber))
                 if (BookAvailable(bookTumbleNumber))
                 {
                     Console.WriteLine("\nLivro nao encontrado para devolucao\n");
-                    Console.Write("Pressione qualquer tecla para voltar ao menu princial...");
+                    Console.Write("\nPressione qualquer tecla para voltar ao menu princial...");
                     Console.ReadKey();
                 }
                 else
@@ -257,7 +262,7 @@ namespace Controllers
             Book auxBook;
 
             Console.Clear();
-			Console.WriteLine("Relatorio de Emprestimos e Devolucoes");
+			Console.WriteLine("-x-x-x-x-x-x- Relatorio de Emprestimos e Devolucoes -x-x-x-x-x-x-");
 
             if(loanedsBooks.Count > 0)
                 foreach (var loanBook in loanedsBooks)
@@ -265,7 +270,7 @@ namespace Controllers
                     auxBook = books.Find(x => x.TumbleNumber == loanBook.TumbleNumber);
                     auxCustomer = customers.Find(x => x.IdCustomer == loanBook.IdCustomer);
 
-				    Console.WriteLine("\nx-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x");
+				    Console.WriteLine("\n-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-");
                     Console.WriteLine($"CPF: {auxCustomer.Cpf}");
                     Console.WriteLine($"Titulo: {auxBook.Title}");
                     if(loanBook.LoanStatus == 1)

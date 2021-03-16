@@ -46,8 +46,8 @@ namespace BookRental
 			string aux;
 			int option;
 			Console.Clear();
-			Console.WriteLine("============= Biblioteca Municipal =============");
-			Console.WriteLine("================ Menu Principal ================");
+			Console.WriteLine("-x-x-x-x-x-x- Biblioteca Municipal -x-x-x-x-x-x-");
+			Console.WriteLine("\n-x-x-x-x-x-x-x-x Menu Principal x-x-x-x-x-x-x-x-\n");
 			Console.WriteLine("1 - Cadastro de Cliente");
 			Console.WriteLine("2 - Cadastro de Livro");
 			Console.WriteLine("3 - Emprestimo de Livro");

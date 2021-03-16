@@ -16,7 +16,7 @@ namespace Controllers
             Customer customer;
 
             Console.Clear();
-            Console.WriteLine("-=-=-=-=-  Cadastro de Cliente  -=-=-=-=-");
+            Console.WriteLine("-x-x-x-x-  Cadastro de Cliente  -x-x-x-x-");
             Console.WriteLine("Informe os dados do cliente\n");
             do
             {
@@ -36,7 +36,7 @@ namespace Controllers
                 customer = ReadingCustomerData(customerCpf);
                 customer.IdCustomer = NewCustomerId();
                 ConvertListForWriteFile(customer);
-				Console.WriteLine("Cliente cadastrado com sucesso!!");
+				Console.WriteLine("\nCliente cadastrado com sucesso!!");
                 Console.Write("\nPressione qualquer tecla para voltar ao menu princial...");
                 Console.ReadKey();
             }

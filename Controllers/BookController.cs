@@ -15,7 +15,7 @@ namespace Controllers
             Book book;
 
             Console.Clear();
-			Console.WriteLine("-=-=-=-=-  Cadastro de Livro  -=-=-=-=-");
+			Console.WriteLine("-x-x-x-x-  Cadastro de Livro  -x-x-x-x-");
             Console.WriteLine("\nInforme os dados do livro\n");
 
             do
@@ -28,7 +28,7 @@ namespace Controllers
             if (BookExists(bookISBN))
             {
                 Console.WriteLine("\nLivro já cadastrado\n");
-                Console.Write("Pressione qualquer tecla para voltar ao menu princial...");
+                Console.Write("\nPressione qualquer tecla para voltar ao menu princial...");
                 Console.ReadKey();
             }
             else
