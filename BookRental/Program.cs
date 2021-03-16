@@ -42,18 +42,31 @@ namespace BookRental
 
 		public static int MainMenu()
 		{
+			bool isInt = false;
+			string aux;
 			int option;
 			Console.Clear();
-			Console.WriteLine("============= Biblioteca Municipal =============");
-			Console.WriteLine("================ Menu Principal ================");
-			Console.WriteLine("1 - Cadastro de Cliente");
-			Console.WriteLine("2 - Cadastro de Livro");
-			Console.WriteLine("3 - Emprestimo de Livro");
-			Console.WriteLine("4 - Devolucao do Livro");
-			Console.WriteLine("5 - Relatorio de Emprestimos e Devolucoes");
-			Console.WriteLine("0 - Fechar Sistema");
+			
+				Console.WriteLine("============= Biblioteca Municipal =============");
+				Console.WriteLine("================ Menu Principal ================");
+				Console.WriteLine("1 - Cadastro de Cliente");
+				Console.WriteLine("2 - Cadastro de Livro");
+				Console.WriteLine("3 - Emprestimo de Livro");
+				Console.WriteLine("4 - Devolucao do Livro");
+				Console.WriteLine("5 - Relatorio de Emprestimos e Devolucoes");
+				Console.WriteLine("0 - Fechar Sistema");
+			do
+			{
+				Console.Write("Escolha uma opcao: ");
+				aux = Console.ReadLine();
+				if (!int.TryParse(aux, out option) || (option < 0) || (option > 5))
+					Console.WriteLine("Opcao invalida, escolha entre os numeros de 0 a 5");
+				else
+					isInt = true;
+			} while (!isInt);
 
-			return option = int.Parse(Console.ReadLine());
+
+			return option;
 		}
 	}
 }
