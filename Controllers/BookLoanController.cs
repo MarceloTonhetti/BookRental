@@ -22,6 +22,7 @@ namespace Controllers
             Console.Write("Numero do Tombo: ");
             bookTumbleNumber = long.Parse(Console.ReadLine());
             if (BookController.BookExists(bookTumbleNumber))
+            {
                 if (!BookAvailable(bookTumbleNumber))
                 {
                     Console.WriteLine("\nLivro indisponivel\n");
@@ -44,11 +45,12 @@ namespace Controllers
                     {
                         bookLoan = ReadingBookData(bookTumbleNumber, idCustomer);
                         ConvertListForWriteFile(bookLoan);
-                        Console.WriteLine("\nLivro cadastrado com sucesso!!");
+                        Console.WriteLine("\nEmprestimo realizado com sucesso!!");
                         Console.Write("\nPressione qualquer tecla para voltar ao menu princial...");
                         Console.ReadKey();
                     }
                 }
+            }
             else
             {
                 Console.WriteLine("\nLivro nao cadastrado\n");
@@ -135,13 +137,26 @@ namespace Controllers
             return bookLoan;
         }
 
-        private static void ConvertListForWriteFile(BookLoan bookLoan)
+        private static void ConvertListForWriteFile(BookLoan bookLoan, bool update = false)
         {
             List<BookLoan> loanedsBooks = ConvertFileToList();
             FileHandler file = new FileHandler();
-
             file.FileName = "EMPRESTIMO.csv";
-            loanedsBooks.Add(bookLoan);
+
+            if (!update)
+                loanedsBooks.Add(bookLoan);
+            else
+            {
+                for (int i = (loanedsBooks.Count - 1); i >= 0; i--)
+                {
+                    if (loanedsBooks[i].TumbleNumber == bookLoan.TumbleNumber)
+                        if (loanedsBooks[i].LoanStatus == 1)
+                        {
+                            loanedsBooks[i].LoanStatus = 2;
+                            break;
+                        }
+                }
+            }
 
             StringBuilder bookLoanSb = new StringBuilder();
             foreach (var sbBookLoan in loanedsBooks)
@@ -155,6 +170,66 @@ namespace Controllers
             FileHandlerController.WriteInFile(file, booksLoanForWrite);
         }
 
+        public static void MakeDevolution()
+        {
+            long bookTumbleNumber;
+            const double delayTicket = 0.10;
+            BookLoan bookLoan;
+            int delayDays;
+
+            Console.Clear();
+            Console.WriteLine("-=-=-=-=-  Devoucao do Livro  -=-=-=-=-");
+            Console.WriteLine("\nInforme os dados para a devolucao\n");
+            Console.Write("Numero do Tombo: ");
+            bookTumbleNumber = long.Parse(Console.ReadLine());
+            if (BookController.BookExists(bookTumbleNumber))
+                if (BookAvailable(bookTumbleNumber))
+                {
+                    Console.WriteLine("\nLivro nao encontrado para devolucao\n");
+                    Console.Write("Pressione qualquer tecla para voltar ao menu princial...");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    bookLoan = GetBookLoan(bookTumbleNumber);
+                    ConvertListForWriteFile(bookLoan, true);
+                    Console.WriteLine("\nDevolucao realizada com sucesso!!");
+
+                    delayDays = (bookLoan.DevolutionDate.Subtract(bookLoan.LoanDate)).Days;
+
+                    if (delayDays < 0)
+						Console.WriteLine("Valor da multa do cliente: R$ " + (delayTicket * (delayDays*-1)).ToString("F"));
+                    
+                        Console.Write("\n\nPressione qualquer tecla para voltar ao menu princial...");
+                        Console.ReadKey();
+                    
+                }
+            else
+            {
+                Console.WriteLine("\nLivro nao cadastrado\n");
+                Console.Write("Pressione qualquer tecla para voltar ao menu princial...");
+                Console.ReadKey();
+            }
+        }
+
+        private static BookLoan GetBookLoan(long bookTumbleNumber)
+        {
+            BookLoan bookLoan = new BookLoan();
+
+            List<BookLoan> loanedsBooks = ConvertFileToList();
+            if (loanedsBooks.Count > 0)
+                for (int i = (loanedsBooks.Count - 1); i >= 0; i--)
+                {
+                    if (loanedsBooks[i].TumbleNumber == bookTumbleNumber)
+                        if (loanedsBooks[i].LoanStatus == 1)
+                        {
+                            bookLoan = loanedsBooks[i];
+                            break;
+                        }
+                }
+
+            return bookLoan;
+        }
 
     }
 }
