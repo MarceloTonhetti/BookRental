@@ -8,7 +8,7 @@ namespace Models
 {
 	public class FileHandler
 	{
-		private string FilePath = @"C:\BookRentalFiles";
+		private string FilePath = Environment.CurrentDirectory.Replace(@"BookRental\bin\Debug", "BookRentalFiles");
 		public string FileName { get; set; }
 
 		public string GetPath() 
