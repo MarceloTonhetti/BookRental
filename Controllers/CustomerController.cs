@@ -15,14 +15,20 @@ namespace Controllers
             string customerCpf;
             Customer customer;
 
-			Console.WriteLine("Informe os dados do cliente\n");
-            Console.Write("CPF: ");
-            customerCpf = Console.ReadLine();
+            Console.Clear();
+            Console.WriteLine("-=-=-=-=-  Cadastro de Cliente  -=-=-=-=-");
+            Console.WriteLine("Informe os dados do cliente\n");
+            do
+            {
+                Console.Write("CPF: ");
+                customerCpf = Console.ReadLine();
+                customerCpf = customerCpf.Trim();
+            } while (customerCpf == "");
 
             if (CustomerExists(customerCpf))
             {
                 Console.WriteLine("\nCliente já cadastrado\n");
-                Console.Write("Pressione qualquer tecla para voltar ao menu princial...");
+                Console.Write("\nPressione qualquer tecla para voltar ao menu princial...");
                 Console.ReadKey();
             }
             else
@@ -31,18 +37,26 @@ namespace Controllers
                 customer.IdCustomer = NewCustomerId();
                 ConvertListForWriteFile(customer);
 				Console.WriteLine("Cliente cadastrado com sucesso!!");
-                Console.Write("Pressione qualquer tecla para voltar ao menu princial...");
+                Console.Write("\nPressione qualquer tecla para voltar ao menu princial...");
                 Console.ReadKey();
             }
         }
 
         private static Customer ReadingCustomerData(string customerCpf) 
         {
+            DateTime dob;
+            string dateOfBorning;
             string cpf = customerCpf;
 			Console.Write("Nome completo: ");
 			string name = Console.ReadLine();
-            Console.Write("Data de nascimento: ");
-            string dateOfBorning = Console.ReadLine();
+
+            do
+            {
+                Console.Write("Data de nascimento: ");
+                dateOfBorning = Console.ReadLine();
+                DateTime.TryParse(dateOfBorning, out dob);
+            } while (dob.ToString("dd/MM/yyyy") == "01/01/0001");
+
             Console.Write("Telefone: ");
             string telephone = Console.ReadLine();
             Console.Write("Logradouro: ");
@@ -56,9 +70,7 @@ namespace Controllers
             Console.Write("CEP: ");
             string zipCode = Console.ReadLine();
 
-            DateTime dob;
-
-            DateTime.TryParse(dateOfBorning, out dob);
+            
 
             Customer customer = new Customer
             {

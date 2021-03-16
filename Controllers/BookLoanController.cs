@@ -12,6 +12,7 @@ namespace Controllers
         public static void RegisterALoan()
         {
             long bookTumbleNumber;
+            string auxTumbleNumber;
             long idCustomer;
             string cpfCustomer;
             BookLoan bookLoan;
@@ -19,8 +20,12 @@ namespace Controllers
             Console.Clear();
             Console.WriteLine("-=-=-=-=-  Emprestimo de Livro  -=-=-=-=-");
             Console.WriteLine("\nInforme os dados para o emprestimo\n");
-            Console.Write("Numero do Tombo: ");
-            bookTumbleNumber = long.Parse(Console.ReadLine());
+            do
+            {
+                Console.Write("Numero do Tombo: ");
+                auxTumbleNumber = Console.ReadLine();
+            } while (!long.TryParse(auxTumbleNumber, out bookTumbleNumber));
+
             if (BookController.BookExists(bookTumbleNumber))
             {
                 if (!BookAvailable(bookTumbleNumber))
@@ -118,12 +123,23 @@ namespace Controllers
 
         private static BookLoan ReadingBookData(long bookTumbleNumber, long idCustomer)
         {
-            Console.Write("Data da devolução: ");
-            string devolutionDate = Console.ReadLine();
-
             DateTime dod;
+            bool dodIsPast;
 
-            DateTime.TryParse(devolutionDate, out dod);
+            do
+            {
+                Console.Write("Data da devolução: ");
+                string devolutionDate = Console.ReadLine();
+                DateTime.TryParse(devolutionDate, out dod);
+                if (DateTime.Compare(dod, DateTime.Now.Date) < 0)
+                {
+                    dodIsPast = true;
+					Console.WriteLine("A data tem que ser igual ou posterior a data de hoje!!");
+                }
+                else
+                    dodIsPast = false;
+
+            } while (dod.ToString("dd/MM/yyyy") == "01/01/0001" || dodIsPast);
 
             BookLoan bookLoan = new BookLoan
             {
@@ -200,14 +216,14 @@ namespace Controllers
                     if (delayDays < 0)
 						Console.WriteLine("Valor da multa do cliente: R$ " + (delayTicket * (delayDays*-1)).ToString("F"));
                     
-                        Console.Write("\n\nPressione qualquer tecla para voltar ao menu princial...");
+                        Console.Write("\nPressione qualquer tecla para voltar ao menu princial...");
                         Console.ReadKey();
                     
                 }
             else
             {
                 Console.WriteLine("\nLivro nao cadastrado\n");
-                Console.Write("Pressione qualquer tecla para voltar ao menu princial...");
+                Console.Write("\nPressione qualquer tecla para voltar ao menu princial...");
                 Console.ReadKey();
             }
         }
@@ -242,23 +258,28 @@ namespace Controllers
 
             Console.Clear();
 			Console.WriteLine("Relatorio de Emprestimos e Devolucoes");
-            foreach (var loanBook in loanedsBooks)
-			{
-                auxBook = books.Find(x => x.TumbleNumber == loanBook.TumbleNumber);
-                auxCustomer = customers.Find(x => x.IdCustomer == loanBook.IdCustomer);
 
-				Console.WriteLine("\nx-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x");
-                Console.WriteLine($"CPF: {auxCustomer.Cpf}");
-                Console.WriteLine($"Titulo: {auxBook.Title}");
-                if(loanBook.LoanStatus == 1)
-                    Console.WriteLine("Status: Emprestado");
-                else
-                    Console.WriteLine("Status: Devolvido");
-                Console.WriteLine($"Data Emprestimo: {loanBook.LoanDate.ToString("dd/MM/yyyy")}");
-                Console.WriteLine($"Data Devolucao: {loanBook.DevolutionDate.ToString("dd/MM/yyyy")}");
+            if(loanedsBooks.Count > 0)
+                foreach (var loanBook in loanedsBooks)
+			    {
+                    auxBook = books.Find(x => x.TumbleNumber == loanBook.TumbleNumber);
+                    auxCustomer = customers.Find(x => x.IdCustomer == loanBook.IdCustomer);
+
+				    Console.WriteLine("\nx-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x");
+                    Console.WriteLine($"CPF: {auxCustomer.Cpf}");
+                    Console.WriteLine($"Titulo: {auxBook.Title}");
+                    if(loanBook.LoanStatus == 1)
+                        Console.WriteLine("Status: Emprestado");
+                    else
+                        Console.WriteLine("Status: Devolvido");
+                    Console.WriteLine($"Data Emprestimo: {loanBook.LoanDate.ToString("dd/MM/yyyy")}");
+                    Console.WriteLine($"Data Devolucao: {loanBook.DevolutionDate.ToString("dd/MM/yyyy")}");
                
-            }
+                }
+            else
+				Console.WriteLine("\nNao existe registros de livros emprestados e devolvidos");
 
+            Console.Write("\nPressione qualquer tecla para voltar ao menu princial...");
             Console.ReadKey();
         }
     }

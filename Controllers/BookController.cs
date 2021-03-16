@@ -17,8 +17,13 @@ namespace Controllers
             Console.Clear();
 			Console.WriteLine("-=-=-=-=-  Cadastro de Livro  -=-=-=-=-");
             Console.WriteLine("\nInforme os dados do livro\n");
-            Console.Write("ISBN: ");
-            bookISBN = Console.ReadLine();
+
+            do
+            {
+                Console.Write("ISBN: ");
+                bookISBN = Console.ReadLine();
+                bookISBN = bookISBN.Trim();
+            } while (bookISBN == "");
 
             if (BookExists(bookISBN))
             {
@@ -96,19 +101,23 @@ namespace Controllers
 
         private static Book ReadingBookData(string bookISBN)
         {
+            string publicationDate;
+            DateTime dop;
+
             string isbn = bookISBN;
             Console.Write("Titulo: ");
             string title = Console.ReadLine();
             Console.Write("Genero: ");
             string genre = Console.ReadLine();
-            Console.Write("Data da Publicação: ");
-            string publicationDate = Console.ReadLine();
+            do
+            {
+                Console.Write("Data da Publicação: ");
+                publicationDate = Console.ReadLine();
+                DateTime.TryParse(publicationDate, out dop);
+            } while (dop.ToString("dd/MM/yyyy") == "01/01/0001");
+
             Console.Write("Autor: ");
             string author = Console.ReadLine();
-
-            DateTime dop;
-
-            DateTime.TryParse(publicationDate, out dop);
 
             Book book = new Book
             {
