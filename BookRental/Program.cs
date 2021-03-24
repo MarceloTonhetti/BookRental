@@ -11,6 +11,8 @@ namespace BookRental
 	{
 		static void Main(string[] args)
 		{
+			System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("en-US");
+			System.Threading.Thread.CurrentThread.CurrentCulture = ci;
 			int option;
 
 			do
@@ -46,7 +48,7 @@ namespace BookRental
 			string aux;
 			int option;
 			Console.Clear();
-			Console.WriteLine("-x-x-x-x-x-x- Biblioteca Municipal -x-x-x-x-x-x-");
+			Console.WriteLine("-x-x-x-x-x-x- Biblioteca dos Loucos -x-x-x-x-x-x-");
 			Console.WriteLine("\n-x-x-x-x-x-x-x-x Menu Principal x-x-x-x-x-x-x-x-\n");
 			Console.WriteLine("1 - Cadastro de Cliente");
 			Console.WriteLine("2 - Cadastro de Livro");
